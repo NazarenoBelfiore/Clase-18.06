@@ -300,6 +300,71 @@ body {
     transform: translateY(-1px);
 }
 
+/* Mobile Menu & Navigation Enhancements */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+    z-index: 998;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-cta {
+    display: none;
+    padding: 14px 28px;
+    font-size: 0.85rem;
+    background: var(--accent-red);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 14, 25, 0.15);
+}
+
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1010;
+}
+
+.mobile-menu-toggle .bar {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-white);
+    border-radius: 2px;
+    transition: all var(--transition-fast);
+}
+
+.mobile-menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+    background-color: var(--accent-red);
+}
+
+.mobile-menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+    background-color: var(--accent-red);
+}
+
 /* 5. MÓDULO 1: HERO SECTION (Centered Layout & Glass Telemetry Cards) */
 #hero {
     position: relative;
@@ -310,7 +375,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: url('assets/hero_bike.png') center center / cover no-repeat;
+    background: url('../assets/hero_bike.png') center center / cover no-repeat;
     overflow: hidden;
 }
 
@@ -488,11 +553,11 @@ body {
 
 /* Quita el degradado lineal del inline style en hover para revelar los colores originales de la imagen sin teñir */
 #manifesto-amateur-col:hover .col-background-image {
-    background-image: url('assets/manifesto_amateur.png') !important;
+    background-image: url('../assets/manifesto_amateur.png') !important;
 }
 
 #manifesto-pro-col:hover .col-background-image {
-    background-image: url('assets/manifesto_pro.png') !important;
+    background-image: url('../assets/manifesto_pro.png') !important;
 }
 
 .col-content {
@@ -1266,8 +1331,48 @@ body {
         padding: 0 24px;
     }
     
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
     .nav-menu {
-        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-left: 1px solid var(--border-glass);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        transition: right var(--transition-normal);
+        z-index: 1000;
+        box-shadow: -10px 0 40px rgba(15, 23, 42, 0.15);
+        padding: 40px 24px;
+        display: flex;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-link {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+    }
+    
+    .mobile-nav-cta {
+        display: inline-flex;
+        margin-top: 16px;
     }
     
     .hero-title {
@@ -1329,5 +1434,20 @@ body {
     
     .modal-content {
         padding: 32px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-cta {
+        display: none;
+    }
+    
+    .logo {
+        font-size: 1.15rem;
+    }
+    
+    .spec-highlight-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
