@@ -23,6 +23,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ----------------------------------------------------------------------
+       1.1 MOBILE MENU TOGGLE LOGIC
+       ---------------------------------------------------------------------- */
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    const navMenu = document.getElementById('header-nav');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const closeMobileMenu = () => {
+        if (navMenu) navMenu.classList.remove('active');
+        if (menuToggle) menuToggle.classList.remove('active');
+        if (menuOverlay) menuOverlay.classList.remove('active');
+        // Only restore scroll if the distributor modal is not open
+        const modalElement = document.getElementById('distributor-modal');
+        if (modalElement && !modalElement.classList.contains('open')) {
+            document.body.style.overflow = '';
+        }
+    };
+
+    const toggleMobileMenu = () => {
+        if (!navMenu) return;
+        const isOpen = navMenu.classList.contains('active');
+        if (isOpen) {
+            closeMobileMenu();
+        } else {
+            navMenu.classList.add('active');
+            if (menuToggle) menuToggle.classList.add('active');
+            if (menuOverlay) menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    if (menuToggle && navMenu && menuOverlay) {
+        menuToggle.addEventListener('click', toggleMobileMenu);
+        menuOverlay.addEventListener('click', closeMobileMenu);
+        
+        // Close menu when clicking nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    }
+
+
+    /* ----------------------------------------------------------------------
        2. RETAILER LOCATOR MODAL LOGIC
        ---------------------------------------------------------------------- */
     const modal = document.getElementById('distributor-modal');
@@ -51,7 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     triggerButtons.forEach(btn => {
-        btn.addEventListener('click', openModal);
+        btn.addEventListener('click', () => {
+            closeMobileMenu();
+            openModal();
+        });
     });
 
     closeBtn.addEventListener('click', closeModal);
